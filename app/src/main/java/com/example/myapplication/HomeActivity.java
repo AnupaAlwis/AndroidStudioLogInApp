@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
 
-    TextView textView_name, textView_email, textView_randomWord, textView_rhymeWord;
+    TextView textView_name, textView_email, textView_randomWord, textView_rhymeWord, textView_score;
     Button button_logout, button_getWord, button_rhymeWord, button_submitGuess;
 
     EditText guessed_word;
@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private String rhymeWords;
 
     private String guessedWord;
+    private Integer playerScore = 100;
     
 
     @Override
@@ -51,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         textView_name = findViewById(R.id.text_fullName);
         //textView_randomWord = findViewById(R.id.text_randomWord);
         textView_rhymeWord = findViewById(R.id.text_rhymeWord);
+        textView_score = findViewById(R.id.text_score);
         button_logout = findViewById(R.id.button_logout);
         button_getWord = findViewById(R.id.button_getWord);
         button_rhymeWord = findViewById(R.id.button_rhymeWord);
@@ -66,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         if (name != null || email != null) {
             textView_name.setText("Full Name : " + name);
             textView_email.setText("Email : " + email);
+            textView_score.setText(String.valueOf(playerScore));
         }
 
         button_logout.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +99,30 @@ public class HomeActivity extends AppCompatActivity {
         button_submitGuess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guessedWord = guessed_word.getText().toString();
-                Toast.makeText(HomeActivity.this,guessedWord,Toast.LENGTH_SHORT).show();
+                submitAnswer();
             }
         });
 
+
+    }
+
+    private void submitAnswer() {
+        if(!(randomWor == null || randomWor.isEmpty())){
+            guessedWord = guessed_word.getText().toString();
+            if(guessedWord == randomWor){
+                Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
+                playerScore = 100;
+                textView_score.setText(String.valueOf(playerScore));
+            }
+            else{
+                playerScore -= 10;
+                textView_score.setText(String.valueOf(playerScore));
+            }
+
+
+        }else{
+            Toast.makeText(HomeActivity.this,"Please start the game first!",Toast.LENGTH_SHORT).show();
+        }
 
     }
 

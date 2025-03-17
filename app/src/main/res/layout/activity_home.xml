@@ -106,6 +106,18 @@
 
         <!--            android:layout_below="@id/text_randomWord"-->
 
+        <TextView
+            android:id="@+id/text_score"
+            android:layout_margin="20dp"
+            android:text="Score: "
+            android:textColor="#388E3C"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
         <EditText
             android:id="@+id/guessed_word"
             android:layout_margin="20dp"
