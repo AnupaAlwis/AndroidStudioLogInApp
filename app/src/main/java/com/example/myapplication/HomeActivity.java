@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,9 @@ import java.io.IOException;
 public class HomeActivity extends AppCompatActivity {
 
     TextView textView_name, textView_email, textView_randomWord, textView_rhymeWord;
-    Button button_logout, button_getWord, button_rhymeWord;
+    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess;
+
+    EditText guessed_word;
 
     SharedPreferences sharedPreferences;
 
@@ -34,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private static String randomWor;
     private String rhymeWords;
+
+    private String guessedWord;
     
 
     @Override
@@ -44,11 +49,14 @@ public class HomeActivity extends AppCompatActivity {
 
         textView_email = findViewById(R.id.text_email);
         textView_name = findViewById(R.id.text_fullName);
-        textView_randomWord = findViewById(R.id.text_randomWord);
+        //textView_randomWord = findViewById(R.id.text_randomWord);
         textView_rhymeWord = findViewById(R.id.text_rhymeWord);
         button_logout = findViewById(R.id.button_logout);
         button_getWord = findViewById(R.id.button_getWord);
         button_rhymeWord = findViewById(R.id.button_rhymeWord);
+        button_submitGuess = findViewById(R.id.button_submitGuess);
+        guessed_word = findViewById(R.id.guessed_word);
+
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -84,6 +92,16 @@ public class HomeActivity extends AppCompatActivity {
                 showRhymeWords();
             }
         });
+
+        button_submitGuess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guessedWord = guessed_word.getText().toString();
+                Toast.makeText(HomeActivity.this,guessedWord,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private void fetchRhymeWord() {
