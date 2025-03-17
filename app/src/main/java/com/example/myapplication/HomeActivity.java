@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static String randomWor;
     private String rhymeWords;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         button_logout = findViewById(R.id.button_logout);
         button_getWord = findViewById(R.id.button_getWord);
         button_rhymeWord = findViewById(R.id.button_rhymeWord);
-
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         button_rhymeWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchRhymeWord();
+                showRhymeWords();
             }
         });
     }
@@ -131,8 +131,8 @@ public class HomeActivity extends AppCompatActivity {
                         rhymeWords = rhymes.substring(0, rhymes.length() - 2); // Remove last comma
 
                         runOnUiThread(() -> {
-                            textView_randomWord.setText("Random Word: " + randomWor);
-                            textView_rhymeWord.setText("Rhymes: " + rhymeWords);
+//                            textView_randomWord.setText("Random Word: " + randomWor);
+//                            textView_rhymeWord.setText("Rhymes: " + rhymeWords);
                             Toast.makeText(HomeActivity.this, "Guess the word!", Toast.LENGTH_SHORT).show();
                         });
 
@@ -192,6 +192,10 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showRhymeWords(){
+        textView_rhymeWord.setText("Rhymes: " + rhymeWords);
     }
 
 

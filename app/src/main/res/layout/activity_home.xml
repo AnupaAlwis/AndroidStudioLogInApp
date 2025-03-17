@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".HomeActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-
-        android:layout_margin="20dp"
-        android:text="WELCOME"
-        android:textColor="#388E3C"
-        android:textStyle="bold"
-        android:textSize="25dp"
-        android:gravity="center"
-        android:layout_gravity="center"
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-    android:id="@+id/text_fullName"
-    android:text="Full Name"
-    android:textColor="#388E3C"
-    android:textStyle="bold"
-    android:textSize="18dp"
-    android:gravity="center"
-    android:layout_gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".HomeActivity">
 
-    <TextView
-        android:id="@+id/text_email"
-        android:text="Email"
+        <TextView
+
+            android:layout_margin="20dp"
+            android:text="WELCOME"
+            android:textColor="#388E3C"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+        android:id="@+id/text_fullName"
+        android:text="Full Name"
         android:textColor="#388E3C"
         android:textStyle="bold"
         android:textSize="18dp"
@@ -45,62 +37,75 @@
         android:layout_height="wrap_content"
         />
 
-    <Button
-        android:id="@+id/button_logout"
-        android:textColor="#fff"
-        android:background="#D32F2F"
-        android:layout_margin="20dp"
-        android:layout_gravity="center"
-        android:text="LOG OUT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <TextView
+            android:id="@+id/text_email"
+            android:text="Email"
+            android:textColor="#388E3C"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
-    <TextView
-        android:id="@+id/text_randomWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Random Word: "
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/button_logout"
+            android:textColor="#fff"
+            android:background="#D32F2F"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:text="LOG OUT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
-    <Button
-        android:id="@+id/button_getWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Random Word"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/text_randomWord"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/text_randomWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Random Word: "
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/text_rhymeWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rhyme Word: "
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/button_getWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Random Word"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/text_randomWord"
+            android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/button_rhymeWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Ryming Word"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/text_randomWord"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/text_rhymeWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rhyme Word: "
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/button_rhymeWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Ryming Word"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/text_randomWord"
+            android:layout_centerHorizontal="true" />
 
 
 
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
