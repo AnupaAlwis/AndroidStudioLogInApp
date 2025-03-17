@@ -117,6 +117,12 @@ public class HomeActivity extends AppCompatActivity {
             else{
                 playerScore -= 10;
                 textView_score.setText(String.valueOf(playerScore));
+                if(playerScore == 0){
+                    Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
+                    playerScore = 100;
+                    randomWor = null;
+                    textView_score.setText("");
+                }
             }
 
 
