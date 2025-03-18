@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +20,7 @@ import org.json.JSONArray;
 import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
-    TextView textView_name, textView_email, textView_rhymeWord, textView_score, textView_length;
+    TextView textView_name, textView_email, textView_rhymeWord, textView_score, textView_length, timerText;
     Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLength, button_submitLetter;
     EditText guessed_word, text_submit_letter;
     SharedPreferences sharedPreferences;
@@ -33,6 +34,10 @@ public class HomeActivity extends AppCompatActivity {
     private Integer playerScore = 100;
     private Integer attempt = 0;
     private Integer helped_times = 0;
+    private int seconds = 0;
+    private boolean isRunning = false;
+    private Handler handler = new Handler();
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -54,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         textView_length = findViewById(R.id.text_length);
         button_submitLetter = findViewById(R.id.button_submitLetter);
         text_submit_letter = findViewById(R.id.text_submit_letter);
+        timerText = findViewById(R.id.timerText);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -80,7 +86,9 @@ public class HomeActivity extends AppCompatActivity {
         button_getWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 fetchRandomWord();
+
             }
         });
 
@@ -118,6 +126,23 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isRunning && playerScore > 0) {
+                seconds++;
+                timerText.setText("Time: " + seconds + "s");
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
+    private void startTimer() {
+        if (!isRunning) {
+            seconds = 0; // Reset timer
+            isRunning = true;
+            handler.post(runnable);
+        }
+    }
     private void submitLetter() {
         String letter = text_submit_letter.getText().toString().trim(); // Trim to remove extra spaces
 
@@ -145,8 +170,6 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(HomeActivity.this, "The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
         reduceScore(5);
     }
-
-
     private void askLength(){
         if(randomWor == null){
             Toast.makeText(HomeActivity.this,"Start the Game First!", Toast.LENGTH_SHORT).show();
@@ -173,6 +196,8 @@ public class HomeActivity extends AppCompatActivity {
             else{
                 reduceScore(10);
                 if(playerScore <= 0){
+                    isRunning = false; // Stop the timer
+                    handler.removeCallbacks(runnable);
                     Toast.makeText(HomeActivity.this,"Game Over word is: " + randomWor,Toast.LENGTH_SHORT).show();
                     reset();
                     fetchRandomWord();
@@ -226,6 +251,7 @@ public class HomeActivity extends AppCompatActivity {
 
                             textView_score.setText("Score: " + playerScore);
                             Toast.makeText(HomeActivity.this, "Guess the word!", Toast.LENGTH_SHORT).show();
+                            startTimer();
                         });
                     } else {
                         // No rhymes found, fetch a new word
@@ -275,7 +301,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     private void showRhymeWords(){
-        if((attempt>5) & (helped_times == 0) ){
+        if((attempt>5) & (helped_times == 0)){
             textView_rhymeWord.setText("The Word Rhymes with: " + rhymeWords);
             helped_times += 1;
         } else if (helped_times > 0) {
@@ -293,9 +319,11 @@ public class HomeActivity extends AppCompatActivity {
         textView_rhymeWord.setText("");
         textView_score.setText("Score: " + playerScore);
         textView_length.setText("");
+        timerText.setText("Timer: 0");
         randomWor = null;
         attempt = 0;
         helped_times = 0;
+        seconds = 0;
     }
 
 
