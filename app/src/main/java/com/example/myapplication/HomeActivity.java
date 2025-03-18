@@ -29,8 +29,8 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    TextView textView_name, textView_email, textView_randomWord, textView_rhymeWord, textView_score, textView_letter, textView_length;
-    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLetter, button_askLength, button_submitLetter;
+    TextView textView_name, textView_email, textView_rhymeWord, textView_score, textView_length;
+    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLength, button_submitLetter;
 
     EditText guessed_word, text_submit_letter;
 
@@ -57,7 +57,6 @@ public class HomeActivity extends AppCompatActivity {
 
         textView_email = findViewById(R.id.text_email);
         textView_name = findViewById(R.id.text_fullName);
-        //textView_randomWord = findViewById(R.id.text_randomWord);
         textView_rhymeWord = findViewById(R.id.text_rhymeWord);
         textView_score = findViewById(R.id.text_score);
         button_logout = findViewById(R.id.button_logout);
@@ -65,8 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         button_rhymeWord = findViewById(R.id.button_rhymeWord);
         button_submitGuess = findViewById(R.id.button_submitGuess);
         guessed_word = findViewById(R.id.guessed_word);
-        textView_letter = findViewById(R.id.text_letter);
-        button_askLetter = findViewById(R.id.button_askLetter);
         button_askLength = findViewById(R.id.button_askLength);
         textView_length = findViewById(R.id.text_length);
         button_submitLetter = findViewById(R.id.button_submitLetter);
@@ -122,12 +119,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        button_askLetter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getHint();
-            }
-        });
+
 
         button_askLength.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +144,8 @@ public class HomeActivity extends AppCompatActivity {
         char character = letter.charAt(0);
         int count = 0;
 
-        if(randomWor.contains(letter) & (letter.length()==1)){
+        if(letter.length()==1){
+
             for (int i = 0; i < randomWor.length(); i++) {
                 if (randomWor.charAt(i) == character) {
                     count++;
@@ -160,6 +153,8 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             Toast.makeText(HomeActivity.this,"The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
+            reduceScore(5);
+
 
         }else{
             Toast.makeText(HomeActivity.this,"Enter a Single Letter",Toast.LENGTH_SHORT).show();
@@ -170,29 +165,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void getHint() {
-        if (randomWor == null) {
-            textView_letter.setText("Please Start the Game First!");
-        } else {
-            // Convert the word into a character array
-            List<Character> letters = new ArrayList<>();
-            for (char c : randomWor.toCharArray()) {
-                letters.add(c);
-            }
 
-            // Shuffle the list
-            Collections.shuffle(letters);
-
-            // Convert the shuffled list back to a string
-            StringBuilder shuffledWord = new StringBuilder();
-            for (char c : letters) {
-                shuffledWord.append(c);
-            }
-
-            // Display the shuffled letters
-            textView_letter.setText("The letters in the word are: " + shuffledWord.toString());
-        }
-    }
 
 
     private void askLength(){
@@ -200,16 +173,13 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(HomeActivity.this,"Start the Game First!", Toast.LENGTH_SHORT).show();
         }else{
             if(playerScore > 0){
-                playerScore -= 5;
+                reduceScore(5);
                 textView_length.setText("The Length of the word is: " + randomWor.length());
-                textView_score.setText("Scrore: " + playerScore);
+
             }else{
                 Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
                 textView_score.setText("Game Over the word is " + randomWor);
-                textView_length.setText("");
-                textView_rhymeWord.setText("");
-                playerScore = 100;
-                randomWor = null;
+                reset();
                 fetchRandomWord();
             }
 
@@ -222,18 +192,13 @@ public class HomeActivity extends AppCompatActivity {
             guessedWord = guessed_word.getText().toString();
             if(guessedWord.equals(randomWor)){
                 Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
-                playerScore = 100;
-                textView_score.setText("Score: " + playerScore);
+                reset();
             }
             else{
-                playerScore -= 10;
-                textView_score.setText("Score: " + playerScore);
+                reduceScore(10);
                 if(playerScore <= 0){
-                    Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
-                    textView_score.setText("Game Over the word is " + randomWor);
-                    textView_rhymeWord.setText("");
-                    playerScore = 100;
-                    randomWor = null;
+                    Toast.makeText(HomeActivity.this,"Game Over word is: " + randomWor,Toast.LENGTH_SHORT).show();
+                    reset();
                     fetchRandomWord();
                 }
             }
@@ -293,8 +258,7 @@ public class HomeActivity extends AppCompatActivity {
                         rhymeWords = rhymes.substring(0, rhymes.length() - 2); // Remove last comma
 
                         runOnUiThread(() -> {
-//                            textView_randomWord.setText("Random Word: " + randomWor);
-//                            textView_rhymeWord.setText("Rhymes: " + rhymeWords);
+
                             textView_score.setText("Score: " + playerScore);
                             Toast.makeText(HomeActivity.this, "Guess the word!", Toast.LENGTH_SHORT).show();
                         });
@@ -317,7 +281,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void fetchRandomWord() {
-        textView_letter.setText("");
         textView_length.setText("");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -361,6 +324,21 @@ public class HomeActivity extends AppCompatActivity {
     private void showRhymeWords(){
         textView_rhymeWord.setText("The Word Rhymes with: " + rhymeWords);
     }
+
+    private void reduceScore(Integer point){
+        playerScore -= point;
+        textView_score.setText("Score: " + playerScore);
+    }
+
+    private void reset(){
+        playerScore = 100;
+        textView_rhymeWord.setText("");
+        textView_score.setText("Score: " + playerScore);
+        textView_length.setText("");
+        randomWor = null;
+
+    }
+
 
 
 
