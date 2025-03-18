@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         if (name != null || email != null) {
             textView_name.setText("Full Name : " + name);
             textView_email.setText("Email : " + email);
-            textView_score.setText(String.valueOf(playerScore));
+            textView_score.setText("Score: " + playerScore);
         }
 
         button_logout.setOnClickListener(new View.OnClickListener() {
@@ -112,16 +112,16 @@ public class HomeActivity extends AppCompatActivity {
             if(guessedWord == randomWor){
                 Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
                 playerScore = 100;
-                textView_score.setText(String.valueOf(playerScore));
+                textView_score.setText("Score: " + playerScore);
             }
             else{
                 playerScore -= 10;
-                textView_score.setText(String.valueOf(playerScore));
+                textView_score.setText("Score: " + playerScore);
                 if(playerScore == 0){
                     Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
+                    textView_score.setText("Game Over Try Again!");
                     playerScore = 100;
                     randomWor = null;
-                    textView_score.setText("");
                 }
             }
 
@@ -137,6 +137,8 @@ public class HomeActivity extends AppCompatActivity {
             fetchRandomWord();
             return;
         }
+
+
 
         OkHttpClient client = new OkHttpClient();
         String RHYME_URL = String.format("https://api.api-ninjas.com/v1/rhyme?word=%s", randomWor);
@@ -179,6 +181,7 @@ public class HomeActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
 //                            textView_randomWord.setText("Random Word: " + randomWor);
 //                            textView_rhymeWord.setText("Rhymes: " + rhymeWords);
+                            textView_score.setText("Score: " + playerScore);
                             Toast.makeText(HomeActivity.this, "Guess the word!", Toast.LENGTH_SHORT).show();
                         });
 
@@ -200,8 +203,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void fetchRandomWord() {
-        OkHttpClient client = new OkHttpClient();
 
+        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://random-word-api.herokuapp.com/word")
                 .build();
