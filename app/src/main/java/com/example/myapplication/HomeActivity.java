@@ -46,6 +46,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private String guessedWord;
     private Integer playerScore = 100;
+
+    private Integer attempt = 0;
+
+    private Integer helped_times = 0;
     
 
     @SuppressLint("MissingInflatedId")
@@ -139,26 +143,31 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void submitLetter(){
-        String letter = text_submit_letter.getText().toString();
-
-        char character = letter.charAt(0);
-        int count = 0;
-
-        if(letter.length()==1){
-
-            for (int i = 0; i < randomWor.length(); i++) {
-                if (randomWor.charAt(i) == character) {
-                    count++;
-                }
-            }
-
-            Toast.makeText(HomeActivity.this,"The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
-            reduceScore(5);
-
-
+        if(text_submit_letter.getText() == null){
+            Toast.makeText(HomeActivity.this, "Enter a letter first", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(HomeActivity.this,"Enter a Single Letter",Toast.LENGTH_SHORT).show();
+            String letter = text_submit_letter.getText().toString();
+
+            char character = letter.charAt(0);
+            int count = 0;
+
+            if(letter.length()==1){
+
+                for (int i = 0; i < randomWor.length(); i++) {
+                    if (randomWor.charAt(i) == character) {
+                        count++;
+                    }
+                }
+
+                Toast.makeText(HomeActivity.this,"The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
+                reduceScore(5);
+
+
+            }else{
+                Toast.makeText(HomeActivity.this,"Enter a Single Letter",Toast.LENGTH_SHORT).show();
+            }
         }
+
 
 
 
@@ -189,6 +198,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void submitAnswer() {
         if(!(randomWor == null || randomWor.isEmpty())){
+            attempt += 1;
             guessedWord = guessed_word.getText().toString();
             if(guessedWord.equals(randomWor)){
                 Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
@@ -322,7 +332,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void showRhymeWords(){
-        textView_rhymeWord.setText("The Word Rhymes with: " + rhymeWords);
+        if((attempt>5) & (helped_times == 0) ){
+            textView_rhymeWord.setText("The Word Rhymes with: " + rhymeWords);
+            helped_times += 1;
+
+        } else if (helped_times > 0) {
+            Toast.makeText(HomeActivity.this, "Sorry Already Helped", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(HomeActivity.this, "You should try atleast 5 times", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private void reduceScore(Integer point){
@@ -336,6 +357,8 @@ public class HomeActivity extends AppCompatActivity {
         textView_score.setText("Score: " + playerScore);
         textView_length.setText("");
         randomWor = null;
+        attempt = 0;
+        helped_times = 0;
 
     }
 
