@@ -118,27 +118,34 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-    private void submitLetter(){
-        if(text_submit_letter.getText() == null){
-            Toast.makeText(HomeActivity.this, "Enter a letter first", Toast.LENGTH_SHORT).show();
-        }else{
-            String letter = text_submit_letter.getText().toString();
-            char character = letter.charAt(0);
-            int count = 0;
+    private void submitLetter() {
+        String letter = text_submit_letter.getText().toString().trim(); // Trim to remove extra spaces
 
-            if(letter.length()==1){
-                for (int i = 0; i < randomWor.length(); i++) {
-                    if (randomWor.charAt(i) == character) {
-                        count++;
-                    }
-                }
-                Toast.makeText(HomeActivity.this,"The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
-                reduceScore(5);
-            }else{
-                Toast.makeText(HomeActivity.this,"Enter a Single Letter",Toast.LENGTH_SHORT).show();
+        if (letter.isEmpty()) { // Check if the input is empty
+            Toast.makeText(HomeActivity.this, "Please enter a letter first", Toast.LENGTH_SHORT).show();
+            return; // Stop execution if the input is empty
+        }
+
+        if (letter.length() > 1) { // Ensure only a single letter is entered
+            Toast.makeText(HomeActivity.this, "Enter a single letter", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        char character = letter.charAt(0);
+        int count = 0;
+
+        // Count occurrences of the letter in randomWor
+        for (int i = 0; i < randomWor.length(); i++) {
+            if (randomWor.charAt(i) == character) {
+                count++;
             }
         }
+
+        // Show result in a Toast
+        Toast.makeText(HomeActivity.this, "The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
+        reduceScore(5);
     }
+
 
     private void askLength(){
         if(randomWor == null){
