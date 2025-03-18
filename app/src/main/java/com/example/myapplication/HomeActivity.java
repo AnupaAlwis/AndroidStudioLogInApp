@@ -166,7 +166,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        // Show result in a Toast
         Toast.makeText(HomeActivity.this, "The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
         reduceScore(5);
     }
@@ -180,6 +179,7 @@ public class HomeActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
                 textView_score.setText("Game Over the word is " + randomWor);
+                playerScore = 100;
                 reset();
                 fetchRandomWord();
             }
@@ -199,6 +199,7 @@ public class HomeActivity extends AppCompatActivity {
                     isRunning = false; // Stop the timer
                     handler.removeCallbacks(runnable);
                     Toast.makeText(HomeActivity.this,"Game Over word is: " + randomWor,Toast.LENGTH_SHORT).show();
+                    playerScore = 100;
                     reset();
                     fetchRandomWord();
                 }
@@ -302,7 +303,8 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void showRhymeWords(){
         if((attempt>5) & (helped_times == 0)){
-            textView_rhymeWord.setText("The Word Rhymes with: " + rhymeWords);
+            String[] rhymes_array = rhymeWords.split(",");
+            textView_rhymeWord.setText("The Word Rhymes with: " + rhymes_array[0]);
             helped_times += 1;
         } else if (helped_times > 0) {
             Toast.makeText(HomeActivity.this, "Sorry Already Helped", Toast.LENGTH_SHORT).show();
@@ -315,19 +317,15 @@ public class HomeActivity extends AppCompatActivity {
         textView_score.setText("Score: " + playerScore);
     }
     private void reset(){
-        playerScore = 100;
         textView_rhymeWord.setText("");
         textView_score.setText("Score: " + playerScore);
         textView_length.setText("");
+        guessed_word.setText("");
+        text_submit_letter.setText("");
         timerText.setText("Timer: 0");
         randomWor = null;
         attempt = 0;
         helped_times = 0;
         seconds = 0;
     }
-
-
-
-
-
 }
