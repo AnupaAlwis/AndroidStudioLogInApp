@@ -30,9 +30,9 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     TextView textView_name, textView_email, textView_randomWord, textView_rhymeWord, textView_score, textView_letter, textView_length;
-    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLetter, button_askLength;
+    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLetter, button_askLength, button_submitLetter;
 
-    EditText guessed_word;
+    EditText guessed_word, text_submit_letter;
 
     SharedPreferences sharedPreferences;
 
@@ -69,6 +69,8 @@ public class HomeActivity extends AppCompatActivity {
         button_askLetter = findViewById(R.id.button_askLetter);
         button_askLength = findViewById(R.id.button_askLength);
         textView_length = findViewById(R.id.text_length);
+        button_submitLetter = findViewById(R.id.button_submitLetter);
+        text_submit_letter = findViewById(R.id.text_submit_letter);
 
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
@@ -133,6 +135,37 @@ public class HomeActivity extends AppCompatActivity {
                 askLength();
             }
         });
+
+        button_submitLetter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitLetter();
+            }
+        });
+
+
+    }
+
+    private void submitLetter(){
+        String letter = text_submit_letter.getText().toString();
+
+        char character = letter.charAt(0);
+        int count = 0;
+
+        if(randomWor.contains(letter) & (letter.length()==1)){
+            for (int i = 0; i < randomWor.length(); i++) {
+                if (randomWor.charAt(i) == character) {
+                    count++;
+                }
+            }
+
+            Toast.makeText(HomeActivity.this,"The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(HomeActivity.this,"Enter a Single Letter",Toast.LENGTH_SHORT).show();
+        }
+
+
 
 
     }

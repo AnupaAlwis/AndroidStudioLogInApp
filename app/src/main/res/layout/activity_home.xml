@@ -182,6 +182,24 @@
             android:layout_height="wrap_content"
             />
 
+        <EditText
+            android:id="@+id/text_submit_letter"
+            android:layout_margin="20dp"
+            android:hint="Submit a letter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/button_submitLetter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit Letter"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true" />
+
 
 
     </LinearLayout>
