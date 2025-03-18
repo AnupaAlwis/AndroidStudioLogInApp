@@ -8,49 +8,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
 import org.json.JSONArray;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-
     TextView textView_name, textView_email, textView_rhymeWord, textView_score, textView_length;
     Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLength, button_submitLetter;
-
     EditText guessed_word, text_submit_letter;
-
     SharedPreferences sharedPreferences;
-
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
     private static final String API_URL = "https://random-word-api.herokuapp.com/word";
-
     private static String randomWor;
     private String rhymeWords;
-
     private String guessedWord;
     private Integer playerScore = 100;
-
     private Integer attempt = 0;
-
     private Integer helped_times = 0;
-    
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,7 +54,6 @@ public class HomeActivity extends AppCompatActivity {
         textView_length = findViewById(R.id.text_length);
         button_submitLetter = findViewById(R.id.button_submitLetter);
         text_submit_letter = findViewById(R.id.text_submit_letter);
-
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -123,8 +104,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-
         button_askLength.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,44 +117,28 @@ public class HomeActivity extends AppCompatActivity {
                 submitLetter();
             }
         });
-
-
     }
-
     private void submitLetter(){
         if(text_submit_letter.getText() == null){
             Toast.makeText(HomeActivity.this, "Enter a letter first", Toast.LENGTH_SHORT).show();
         }else{
             String letter = text_submit_letter.getText().toString();
-
             char character = letter.charAt(0);
             int count = 0;
 
             if(letter.length()==1){
-
                 for (int i = 0; i < randomWor.length(); i++) {
                     if (randomWor.charAt(i) == character) {
                         count++;
                     }
                 }
-
                 Toast.makeText(HomeActivity.this,"The letter occurs " + count + " times", Toast.LENGTH_SHORT).show();
                 reduceScore(5);
-
-
             }else{
                 Toast.makeText(HomeActivity.this,"Enter a Single Letter",Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
-
-
     }
-
-
-
 
     private void askLength(){
         if(randomWor == null){
@@ -184,18 +147,14 @@ public class HomeActivity extends AppCompatActivity {
             if(playerScore > 0){
                 reduceScore(5);
                 textView_length.setText("The Length of the word is: " + randomWor.length());
-
             }else{
                 Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
                 textView_score.setText("Game Over the word is " + randomWor);
                 reset();
                 fetchRandomWord();
             }
-
-
         }
     }
-
     private void submitAnswer() {
         if(!(randomWor == null || randomWor.isEmpty())){
             attempt += 1;
@@ -212,22 +171,15 @@ public class HomeActivity extends AppCompatActivity {
                     fetchRandomWord();
                 }
             }
-
-
         }else{
             Toast.makeText(HomeActivity.this,"Please start the game first!",Toast.LENGTH_SHORT).show();
         }
-
     }
-
     private void fetchRhymeWord() {
         if (randomWor == null || randomWor.isEmpty()) {
             fetchRandomWord();
             return;
         }
-
-
-
         OkHttpClient client = new OkHttpClient();
 
         String RHYME_URL = String.format("https://api.api-ninjas.com/v1/rhyme?word=%s", randomWor);
@@ -253,31 +205,25 @@ public class HomeActivity extends AppCompatActivity {
                     );
                     return;
                 }
-
                 String responseData = response.body().string();
                 try {
                     JSONArray jsonArray = new JSONArray(responseData);
-
                     if (jsonArray.length() > 0) {
                         // Build a string of rhyme words
                         StringBuilder rhymes = new StringBuilder();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             rhymes.append(jsonArray.getString(i)).append(", ");
                         }
-
                         rhymeWords = rhymes.substring(0, rhymes.length() - 2); // Remove last comma
-
                         runOnUiThread(() -> {
 
                             textView_score.setText("Score: " + playerScore);
                             Toast.makeText(HomeActivity.this, "Guess the word!", Toast.LENGTH_SHORT).show();
                         });
-
                     } else {
                         // No rhymes found, fetch a new word
                         runOnUiThread(() -> fetchRandomWord());
                     }
-
                 } catch (Exception e) {
                     runOnUiThread(() ->
                             Toast.makeText(HomeActivity.this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show()
@@ -286,17 +232,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
     private void fetchRandomWord() {
         textView_length.setText("");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://random-word-api.herokuapp.com/word")
                 .build();
-
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -304,7 +245,6 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "Failed to fetch word: " + e.getMessage(), Toast.LENGTH_LONG).show()
                 );
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {
@@ -313,15 +253,12 @@ public class HomeActivity extends AppCompatActivity {
                     );
                     return;
                 }
-
                 String responseData = response.body().string();
                 try {
                     JSONArray jsonArray = new JSONArray(responseData);
                     randomWor = jsonArray.getString(0);
-
                     // Check for rhymes immediately
                     runOnUiThread(() -> fetchRhymeWord());
-
                 } catch (Exception e) {
                     runOnUiThread(() ->
                             Toast.makeText(HomeActivity.this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show()
@@ -330,27 +267,20 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
     private void showRhymeWords(){
         if((attempt>5) & (helped_times == 0) ){
             textView_rhymeWord.setText("The Word Rhymes with: " + rhymeWords);
             helped_times += 1;
-
         } else if (helped_times > 0) {
             Toast.makeText(HomeActivity.this, "Sorry Already Helped", Toast.LENGTH_SHORT).show();
-
         }else{
             Toast.makeText(HomeActivity.this, "You should try atleast 5 times", Toast.LENGTH_SHORT).show();
         }
-
-
     }
-
     private void reduceScore(Integer point){
         playerScore -= point;
         textView_score.setText("Score: " + playerScore);
     }
-
     private void reset(){
         playerScore = 100;
         textView_rhymeWord.setText("");
@@ -359,7 +289,6 @@ public class HomeActivity extends AppCompatActivity {
         randomWor = null;
         attempt = 0;
         helped_times = 0;
-
     }
 
 
