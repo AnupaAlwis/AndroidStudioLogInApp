@@ -28,7 +28,6 @@ public class HomeActivity extends AppCompatActivity {
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
-    private static final String API_URL = "https://random-word-api.herokuapp.com/word";
     private static String randomWor;
     private String rhymeWords;
     private String guessedWord;
@@ -284,7 +283,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     private void fetchRandomWord() {
-        textView_length.setText("");
 //        randomWor = "apple";
 //        runOnUiThread(() -> fetchRhymeWord());
         OkHttpClient client = new OkHttpClient();
@@ -346,7 +344,6 @@ public class HomeActivity extends AppCompatActivity {
         attempt = 0;
         helped_times = 0;
         seconds = 0;
-
     }
 
     private void sendScoreToAPI(String playerName, int playerScore, int seconds) {

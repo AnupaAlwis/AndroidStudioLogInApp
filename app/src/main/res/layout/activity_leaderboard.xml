@@ -24,7 +24,7 @@
                 android:id="@+id/button_gamePage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Back To Game"
+                android:text="Start the Game Again"
                 android:textColor="#3B84F1"
                 android:backgroundTint="@color/white"
                 android:background="@drawable/rounded_corner"
