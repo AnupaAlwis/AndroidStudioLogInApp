@@ -1,7 +1,10 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import java.util.List;
 
 public class LeaderBoard extends AppCompatActivity {
     TextView textViewLeaderboard;
+    Button game_page;
     private static final String API_URL = "http://dreamlo.com/lb/9C5QulbteEq1QG81mfCnYQh8Y5sie5T0io5A_j8WI9eA/json";
 
     @SuppressLint("MissingInflatedId")
@@ -36,8 +40,17 @@ public class LeaderBoard extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
 
         textViewLeaderboard = findViewById(R.id.textViewLeaderboard);
+        game_page = findViewById(R.id.button_gamePage);
 
         fetchLeaderboard();
+
+        game_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LeaderBoard.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void fetchLeaderboard() {
