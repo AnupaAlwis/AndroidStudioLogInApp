@@ -7,18 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextName, editEmailName;
     Button button_save;
-
     SharedPreferences sharedPreferences;
-
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
@@ -33,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         button_save = findViewById(R.id.button_save);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
-        //When open activity chech whether there are sahred preference data
-
+        
+        //When open activity check whether there are sahred preference data
         String name = sharedPreferences.getString(KEY_NAME,null);
 
         if (name != null){
@@ -46,17 +42,26 @@ public class MainActivity extends AppCompatActivity {
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //When click a button put data on shared preference
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(KEY_NAME,editTextName.getText().toString());
-                editor.putString(KEY_EMAIL,editEmailName.getText().toString());
-                editor.apply();
+                String email = editEmailName.getText().toString();
+                String name = editTextName.getText().toString();
 
-                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                startActivity(intent);
+                if(name.isEmpty() || email.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Enter the Details Correctly!", Toast.LENGTH_SHORT).show();
+                }else{
+                    //When click a button put data on shared preference
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(KEY_NAME,editTextName.getText().toString());
+                    editor.putString(KEY_EMAIL,editEmailName.getText().toString());
+                    editor.apply();
 
-                Toast.makeText(MainActivity.this,"Login Success", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                    startActivity(intent);
 
+                    Toast.makeText(MainActivity.this,"Login Success", Toast.LENGTH_SHORT).show();
+
+
+
+                }
 
 
             }
