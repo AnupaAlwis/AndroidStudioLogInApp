@@ -19,13 +19,25 @@
 
         <TextView
             android:textSize="35dp"
+            android:textColor="#FFDD43"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MAD Word Guessing Game"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:textSize="35dp"
             android:textColor="#FFFFFF"
             android:layout_margin="20dp"
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login and Play"
+            android:text="Login To Play"
             android:textStyle="bold"
             />
         <ImageView
