@@ -94,14 +94,14 @@ public class LeaderBoard extends AppCompatActivity {
                                 });
 
                                 // Build leaderboard text
-                                StringBuilder leaderboardText = new StringBuilder("Leaderboard:\n\n");
+                                StringBuilder leaderboardText = new StringBuilder("");
                                 for (int i = 0; i < playerList.size(); i++) {
                                     PlayerEntry player = playerList.get(i);
-                                    leaderboardText.append(i + 1).append(". ")
-                                            .append(player.name).append(" - Score: ")
+                                    leaderboardText.append(i + 1).append(" . ")
+                                            .append(player.name).append(": Score: ")
                                             .append(player.score).append(", Time: ")
-                                            .append(player.time).append("s, Ratio: ")
-                                            .append(String.format("%.2f", player.ratio)).append("\n");
+                                            .append(player.time).append("s, Score Time Ratio: ")
+                                            .append(String.format("%.2f", player.ratio)).append("\n\n");
                                 }
 
                                 textViewLeaderboard.setText(leaderboardText.toString());
