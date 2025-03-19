@@ -209,6 +209,7 @@ public class HomeActivity extends AppCompatActivity {
             }
             else{
                 reduceScore(10);
+                Toast.makeText(HomeActivity.this, "Try Again!", Toast.LENGTH_SHORT).show();
                 if(playerScore <= 0){
                     isRunning = false; // Stop the timer
                     handler.removeCallbacks(runnable);
