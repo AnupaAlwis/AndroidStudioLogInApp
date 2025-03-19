@@ -87,7 +87,9 @@ public class HomeActivity extends AppCompatActivity {
                 editor.clear();
                 editor.apply();
                 Toast.makeText(HomeActivity.this, "Log Out Successfully", Toast.LENGTH_SHORT).show();
-                finish();
+                Intent intent = new Intent(HomeActivity.this,MainActivity.class);
+                startActivity(intent);
+
             }
         });
 
@@ -196,33 +198,39 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
     private void submitAnswer() {
-        if(!(randomWor == null || randomWor.isEmpty())){
-            attempt += 1;
-            guessedWord = guessed_word.getText().toString();
-            if(guessedWord.equals(randomWor)){
-                Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
-                String name = sharedPreferences.getString(KEY_NAME, null);
-                sendScoreToAPI(name, playerScore, seconds);
-                reset();
-                fetchRandomWord();
-            }
-            else{
-                reduceScore(10);
-                Toast.makeText(HomeActivity.this, "Try Again!", Toast.LENGTH_SHORT).show();
-                if(playerScore <= 0){
-                    isRunning = false; // Stop the timer
-                    handler.removeCallbacks(runnable);
-                    Toast.makeText(HomeActivity.this,"Game Over word is: " + randomWor,Toast.LENGTH_SHORT).show();
+        guessedWord = guessed_word.getText().toString();
+        if(guessedWord.isEmpty()){
+            Toast.makeText(HomeActivity.this, "Enter a Word", Toast.LENGTH_SHORT).show();
+        }else{
+            if(!(randomWor == null || randomWor.isEmpty())){
+                attempt += 1;
+                if(guessedWord.equals(randomWor)){
+                    Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
                     String name = sharedPreferences.getString(KEY_NAME, null);
                     sendScoreToAPI(name, playerScore, seconds);
-                    playerScore = 100;
                     reset();
                     fetchRandomWord();
                 }
+                else{
+                    reduceScore(10);
+                    Toast.makeText(HomeActivity.this, "Try Again!", Toast.LENGTH_SHORT).show();
+                    if(playerScore <= 0){
+                        isRunning = false; // Stop the timer
+                        handler.removeCallbacks(runnable);
+                        Toast.makeText(HomeActivity.this,"Game Over word is: " + randomWor,Toast.LENGTH_SHORT).show();
+                        String name = sharedPreferences.getString(KEY_NAME, null);
+                        sendScoreToAPI(name, playerScore, seconds);
+                        playerScore = 100;
+                        reset();
+                        fetchRandomWord();
+                    }
+                }
+            }else{
+                Toast.makeText(HomeActivity.this,"Please start the game first!",Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(HomeActivity.this,"Please start the game first!",Toast.LENGTH_SHORT).show();
+
         }
+
     }
     private void fetchRhymeWord() {
         if (randomWor == null || randomWor.isEmpty()) {
@@ -283,8 +291,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     private void fetchRandomWord() {
-//        randomWor = "apple";
-//        runOnUiThread(() -> fetchRhymeWord());
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://random-word-api.herokuapp.com/word")
