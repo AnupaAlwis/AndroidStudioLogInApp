@@ -326,7 +326,7 @@ public class HomeActivity extends AppCompatActivity {
         } else if (helped_times > 0) {
             Toast.makeText(HomeActivity.this, "Sorry Already Helped", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(HomeActivity.this, "You should try atleast 5 times", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeActivity.this, "You should try at least 5 times", Toast.LENGTH_SHORT).show();
         }
     }
     private void reduceScore(Integer point){
