@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         button_save = findViewById(R.id.button_save);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
-        
+
         //When open activity check whether there are sahred preference data
         String name = sharedPreferences.getString(KEY_NAME,null);
 
@@ -58,12 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
 
                     Toast.makeText(MainActivity.this,"Login Success", Toast.LENGTH_SHORT).show();
-
-
-
                 }
-
-
             }
         });
     }
