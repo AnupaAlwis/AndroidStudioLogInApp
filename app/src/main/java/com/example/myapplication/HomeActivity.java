@@ -291,7 +291,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     private void fetchRandomWord() {
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://random-word-api.herokuapp.com/word")
