@@ -20,10 +20,10 @@
 
             <TextView
                 android:layout_margin="20dp"
-                android:text="WELCOME !"
+                android:text="WELCOME"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
-                android:textSize="35dp"
+                android:textSize="30dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:text="Username: "
                 android:textColor="#ffffff"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="35dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:text="Email: "
                 android:textColor="#ffffff"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="18dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -73,13 +73,16 @@
                 android:textColor="#FFFFFF"
                 android:textSize="24sp" />
 
+
             <Button
                 android:id="@+id/button_getWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@null"
                 android:background="@drawable/button_background"
                 android:text="Get Random Word"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
                 android:padding="10dp"
                 android:gravity="center"
                 android:layout_margin="20dp"
@@ -100,6 +103,7 @@
             <Button
                 android:id="@+id/button_rhymeWord"
                 android:layout_width="match_parent"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Get Rhyming Word"
@@ -140,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Submit"
+                android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:gravity="center"
@@ -168,6 +173,7 @@
                 android:padding="10dp"
                 android:gravity="center"
                 android:layout_margin="20dp"
+                android:textColor="@color/white"
                 android:layout_marginTop="10dp" />
 
             <EditText
@@ -186,6 +192,7 @@
             <Button
                 android:id="@+id/button_submitLetter"
                 android:layout_width="match_parent"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Submit Letter !"
@@ -201,6 +208,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Leaderboard !"
+                android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:gravity="center"

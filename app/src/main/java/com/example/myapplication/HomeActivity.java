@@ -39,9 +39,6 @@ public class HomeActivity extends AppCompatActivity {
     private boolean isRunning = false;
     private Handler handler = new Handler();
 
-
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +50,17 @@ public class HomeActivity extends AppCompatActivity {
         textView_name = findViewById(R.id.text_fullName);
         textView_rhymeWord = findViewById(R.id.text_rhymeWord);
         textView_score = findViewById(R.id.text_score);
+        textView_length = findViewById(R.id.text_length);
+        text_submit_letter = findViewById(R.id.text_submit_letter);
+        guessed_word = findViewById(R.id.guessed_word);
+        timerText = findViewById(R.id.timerText);
         button_logout = findViewById(R.id.button_logout);
         button_getWord = findViewById(R.id.button_getWord);
-        button_rhymeWord = findViewById(R.id.button_rhymeWord);
-        button_submitGuess = findViewById(R.id.button_submitGuess);
-        guessed_word = findViewById(R.id.guessed_word);
-        button_askLength = findViewById(R.id.button_askLength);
-        textView_length = findViewById(R.id.text_length);
         button_submitLetter = findViewById(R.id.button_submitLetter);
-        text_submit_letter = findViewById(R.id.text_submit_letter);
-        timerText = findViewById(R.id.timerText);
+        button_askLength = findViewById(R.id.button_askLength);
+        button_rhymeWord = findViewById(R.id.button_rhymeWord);
         button_leaderBoard = findViewById(R.id.button_leaderBoard);
+        button_submitGuess = findViewById(R.id.button_submitGuess);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -71,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         String email = sharedPreferences.getString(KEY_EMAIL, null);
 
         if (name != null || email != null) {
-            textView_name.setText("Full Name : " + name);
+            textView_name.setText(name + " !");
             textView_email.setText("Email : " + email);
             textView_score.setText("Score: " + playerScore);
         }
@@ -287,41 +284,40 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void fetchRandomWord() {
         textView_length.setText("");
-        randomWor = "apple";
-        runOnUiThread(() -> fetchRhymeWord());
-//        OkHttpClient client = new OkHttpClient();
-//        Request request = new Request.Builder()
-//                .url("https://random-word-api.herokuapp.com/word")
-//                .build();
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                runOnUiThread(() ->
-//                        Toast.makeText(HomeActivity.this, "Failed to fetch word: " + e.getMessage(), Toast.LENGTH_LONG).show()
-//                );
-//            }
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (!response.isSuccessful()) {
-//                    runOnUiThread(() ->
-//                            Toast.makeText(HomeActivity.this, "Error: " + response.code(), Toast.LENGTH_LONG).show()
-//                    );
-//                    return;
-//                }
-//                String responseData = response.body().string();
-//                try {
-//                    JSONArray jsonArray = new JSONArray(responseData);
-//                    randomWor = jsonArray.getString(0);
-//                    // Check for rhymes immediately
-//                    randomWor = "apple";
-//                    runOnUiThread(() -> fetchRhymeWord());
-//                } catch (Exception e) {
-//                    runOnUiThread(() ->
-//                            Toast.makeText(HomeActivity.this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show()
-//                    );
-//                }
-//            }
-//        });
+//        randomWor = "apple";
+//        runOnUiThread(() -> fetchRhymeWord());
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://random-word-api.herokuapp.com/word")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() ->
+                        Toast.makeText(HomeActivity.this, "Failed to fetch word: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                );
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    runOnUiThread(() ->
+                            Toast.makeText(HomeActivity.this, "Error: " + response.code(), Toast.LENGTH_LONG).show()
+                    );
+                    return;
+                }
+                String responseData = response.body().string();
+                try {
+                    JSONArray jsonArray = new JSONArray(responseData);
+                    randomWor = jsonArray.getString(0);
+                    // Check for rhymes immediately
+                    runOnUiThread(() -> fetchRhymeWord());
+                } catch (Exception e) {
+                    runOnUiThread(() ->
+                            Toast.makeText(HomeActivity.this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                    );
+                }
+            }
+        });
     }
     private void showRhymeWords(){
         if((attempt>5) & (helped_times == 0)){
