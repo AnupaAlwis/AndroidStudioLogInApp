@@ -1,193 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".MainActivity">
 
-    <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".HomeActivity">
+        android:layout_height="match_parent">
 
-        <TextView
-
-            android:layout_margin="20dp"
-            android:text="WELCOME"
-            android:textColor="#388E3C"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:gravity="center"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <TextView
-        android:id="@+id/text_fullName"
-        android:text="Full Name"
-        android:textColor="#388E3C"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".HomeActivity">
 
-        <TextView
-            android:id="@+id/text_email"
-            android:text="Email"
-            android:textColor="#388E3C"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            <TextView
+                android:layout_margin="20dp"
+                android:text="WELCOME !"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="35dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button_logout"
-            android:textColor="#fff"
-            android:background="#D32F2F"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:text="LOG OUT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            <TextView
+                android:id="@+id/text_fullName"
+                android:text="Username: "
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/text_randomWord"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Random Word: "-->
-<!--            android:layout_gravity="center"-->
-<!--            android:gravity="center"-->
-<!--            android:textSize="18sp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_centerHorizontal="true" />-->
+            <TextView
+                android:id="@+id/text_email"
+                android:text="Email: "
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/timerText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time: 0s"
-            android:layout_gravity="center"
-            android:textSize="24sp"/>
-
-        <Button
-            android:id="@+id/button_getWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Get Random Word"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true" />
-<!--            android:layout_below="@id/text_randomWord"-->
+            <Button
+                android:id="@+id/button_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LOG OUT"
+                android:textColor="#ffffff"
+                android:background="@drawable/button_background"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:layout_gravity="center"/>
 
 
-        <TextView
-            android:id="@+id/text_rhymeWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rhyme Word: "
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/timerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: 0s"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/button_rhymeWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Get Ryming Word"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true" />
+            <Button
+                android:id="@+id/button_getWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Get Random Word"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp" />
 
-        <!--            android:layout_below="@id/text_randomWord"-->
+            <TextView
+                android:id="@+id/text_rhymeWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rhyme Word: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_marginTop="20dp" />
 
-        <TextView
-            android:id="@+id/text_score"
-            android:layout_margin="20dp"
-            android:text="Score: "
-            android:textColor="#388E3C"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <EditText
-            android:id="@+id/guessed_word"
-            android:layout_margin="20dp"
-            android:hint="Guess the word"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            <Button
+                android:id="@+id/button_rhymeWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Get Rhyming Word"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp" />
 
-        <Button
-            android:id="@+id/button_submitGuess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/text_score"
+                android:layout_margin="20dp"
+                android:text="Score: "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <EditText
+                android:id="@+id/guessed_word"
+                android:layout_margin="20dp"
+                android:layout_marginTop="12dp"
+                android:hint="Guess the Word"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:background="@drawable/button_outline"
+                android:padding="10dp"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <Button
+                android:id="@+id/button_submitGuess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Submit"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp" />
 
-        <TextView
-            android:id="@+id/text_length"
-            android:text="What is the word length"
-            android:textColor="#388E3C"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            <TextView
+                android:id="@+id/text_length"
+                android:layout_margin="20dp"
+                android:text="Get a Hint !"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button_askLength"
-            android:textColor="#fff"
-            android:background="#D32F2F"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:text="Get Word Length"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            <Button
+                android:id="@+id/button_askLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="What is the Word Length?"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp" />
 
-        <EditText
-            android:id="@+id/text_submit_letter"
-            android:layout_margin="20dp"
-            android:hint="Submit a letter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            <EditText
+                android:id="@+id/text_submit_letter"
+                android:layout_margin="20dp"
+                android:layout_marginTop="12dp"
+                android:hint="Find the number of occurance of a letter !"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:background="@drawable/button_outline"
+                android:padding="10dp"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button_submitLetter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit Letter"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true" />
+            <Button
+                android:id="@+id/button_submitLetter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Submit Letter !"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp" />
 
+            <Button
+                android:id="@+id/button_leaderBoard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Leaderboard !"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp" />
 
+        </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+</RelativeLayout>

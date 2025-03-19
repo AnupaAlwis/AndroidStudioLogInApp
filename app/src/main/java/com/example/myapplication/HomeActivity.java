@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,7 +22,7 @@ import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
     TextView textView_name, textView_email, textView_rhymeWord, textView_score, textView_length, timerText;
-    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLength, button_submitLetter;
+    Button button_logout, button_getWord, button_rhymeWord, button_submitGuess, button_askLength, button_submitLetter, button_leaderBoard;
     EditText guessed_word, text_submit_letter;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -37,6 +38,8 @@ public class HomeActivity extends AppCompatActivity {
     private int seconds = 0;
     private boolean isRunning = false;
     private Handler handler = new Handler();
+
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -60,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         button_submitLetter = findViewById(R.id.button_submitLetter);
         text_submit_letter = findViewById(R.id.text_submit_letter);
         timerText = findViewById(R.id.timerText);
+        button_leaderBoard = findViewById(R.id.button_leaderBoard);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -71,6 +75,14 @@ public class HomeActivity extends AppCompatActivity {
             textView_email.setText("Email : " + email);
             textView_score.setText("Score: " + playerScore);
         }
+
+        button_leaderBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,LeaderBoard.class);
+                startActivity(intent);
+            }
+        });
 
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,8 +189,10 @@ public class HomeActivity extends AppCompatActivity {
                 reduceScore(5);
                 textView_length.setText("The Length of the word is: " + randomWor.length());
             }else{
-                Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(HomeActivity.this,"Game Over!",Toast.LENGTH_SHORT).show();
                 textView_score.setText("Game Over the word is " + randomWor);
+                String name = sharedPreferences.getString(KEY_NAME, null);
+                sendScoreToAPI(name, playerScore, seconds);
                 playerScore = 100;
                 reset();
                 fetchRandomWord();
@@ -191,7 +205,10 @@ public class HomeActivity extends AppCompatActivity {
             guessedWord = guessed_word.getText().toString();
             if(guessedWord.equals(randomWor)){
                 Toast.makeText(HomeActivity.this,"Well done!",Toast.LENGTH_SHORT).show();
+                String name = sharedPreferences.getString(KEY_NAME, null);
+                sendScoreToAPI(name, playerScore, seconds);
                 reset();
+                fetchRandomWord();
             }
             else{
                 reduceScore(10);
@@ -199,6 +216,8 @@ public class HomeActivity extends AppCompatActivity {
                     isRunning = false; // Stop the timer
                     handler.removeCallbacks(runnable);
                     Toast.makeText(HomeActivity.this,"Game Over word is: " + randomWor,Toast.LENGTH_SHORT).show();
+                    String name = sharedPreferences.getString(KEY_NAME, null);
+                    sendScoreToAPI(name, playerScore, seconds);
                     playerScore = 100;
                     reset();
                     fetchRandomWord();
@@ -268,38 +287,41 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void fetchRandomWord() {
         textView_length.setText("");
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://random-word-api.herokuapp.com/word")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(() ->
-                        Toast.makeText(HomeActivity.this, "Failed to fetch word: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                );
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful()) {
-                    runOnUiThread(() ->
-                            Toast.makeText(HomeActivity.this, "Error: " + response.code(), Toast.LENGTH_LONG).show()
-                    );
-                    return;
-                }
-                String responseData = response.body().string();
-                try {
-                    JSONArray jsonArray = new JSONArray(responseData);
-                    randomWor = jsonArray.getString(0);
-                    // Check for rhymes immediately
-                    runOnUiThread(() -> fetchRhymeWord());
-                } catch (Exception e) {
-                    runOnUiThread(() ->
-                            Toast.makeText(HomeActivity.this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                    );
-                }
-            }
-        });
+        randomWor = "apple";
+        runOnUiThread(() -> fetchRhymeWord());
+//        OkHttpClient client = new OkHttpClient();
+//        Request request = new Request.Builder()
+//                .url("https://random-word-api.herokuapp.com/word")
+//                .build();
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                runOnUiThread(() ->
+//                        Toast.makeText(HomeActivity.this, "Failed to fetch word: " + e.getMessage(), Toast.LENGTH_LONG).show()
+//                );
+//            }
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                if (!response.isSuccessful()) {
+//                    runOnUiThread(() ->
+//                            Toast.makeText(HomeActivity.this, "Error: " + response.code(), Toast.LENGTH_LONG).show()
+//                    );
+//                    return;
+//                }
+//                String responseData = response.body().string();
+//                try {
+//                    JSONArray jsonArray = new JSONArray(responseData);
+//                    randomWor = jsonArray.getString(0);
+//                    // Check for rhymes immediately
+//                    randomWor = "apple";
+//                    runOnUiThread(() -> fetchRhymeWord());
+//                } catch (Exception e) {
+//                    runOnUiThread(() ->
+//                            Toast.makeText(HomeActivity.this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show()
+//                    );
+//                }
+//            }
+//        });
     }
     private void showRhymeWords(){
         if((attempt>5) & (helped_times == 0)){
@@ -327,5 +349,35 @@ public class HomeActivity extends AppCompatActivity {
         attempt = 0;
         helped_times = 0;
         seconds = 0;
+
     }
+
+    private void sendScoreToAPI(String playerName, int playerScore, int seconds) {
+        OkHttpClient client = new OkHttpClient();
+
+        String url = String.format("http://dreamlo.com/lb/9C5QulbteEq1QG81mfCnYQh8Y5sie5T0io5A_j8WI9eA/add/%s/%d/%d",
+                playerName, playerScore, seconds);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(okhttp3.RequestBody.create(null, new byte[0]))  // Empty POST body
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() ->
+                        Toast.makeText(HomeActivity.this, "Failed to send score: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                );
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(() ->
+                        Toast.makeText(HomeActivity.this, "Score submitted successfully!", Toast.LENGTH_SHORT).show()
+                );
+            }
+        });
+    }
+
 }
